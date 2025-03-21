@@ -654,44 +654,195 @@ footer {
   transition: opacity 1s ease, transform 1s ease;
 }
 
-.platform.visible {
+.platform:target {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Add JS to enable these animations */
-document.addEventListener('DOMContentLoaded', function() {
-  const header = document.querySelector('header');
-  const platforms = document.querySelectorAll('.platform');
-  
-  // Header scroll effect
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-    
-    // Reveal sections on scroll
-    platforms.forEach(platform => {
-      const platformPosition = platform.getBoundingClientRect().top;
-      const screenPosition = window.innerHeight / 1.2;
-      
-      if (platformPosition < screenPosition) {
-        platform.classList.add('visible');
-      }
-    });
-  });
-  
-  // Initially set platforms visible
-  setTimeout(() => {
-    platforms.forEach(platform => {
-      const platformPosition = platform.getBoundingClientRect().top;
-      const screenPosition = window.innerHeight / 1.2;
-      
-      if (platformPosition < screenPosition) {
-        platform.classList.add('visible');
-      }
-    });
-  }, 300);
-});
+/* Add automatic animation triggers on page load for initial visibility */
+#power-platform {
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+#servicenow {
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 0.5s;
+}
+
+#automation-anywhere {
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 0.7s;
+}
+
+/* Adding interactive elements with pure CSS */
+.feature-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  transition: transform 0.6s ease;
+  transform: translateY(100%);
+}
+
+.feature-image:hover::after {
+  transform: translateY(0);
+}
+
+/* Floating shapes */
+.platform::before,
+.platform::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.4;
+  animation: float 10s ease-in-out infinite alternate;
+}
+
+#power-platform::before {
+  width: 200px;
+  height: 200px;
+  background: var(--pp-gradient);
+  top: 15%;
+  left: 5%;
+  filter: blur(30px);
+}
+
+#power-platform::after {
+  width: 300px;
+  height: 300px;
+  background: var(--pp-gradient);
+  bottom: 10%;
+  right: 5%;
+  filter: blur(50px);
+  animation-delay: 2s;
+}
+
+#servicenow::before {
+  width: 250px;
+  height: 250px;
+  background: var(--sn-gradient);
+  top: 20%;
+  right: 8%;
+  filter: blur(40px);
+}
+
+#servicenow::after {
+  width: 180px;
+  height: 180px;
+  background: var(--sn-gradient);
+  bottom: 15%;
+  left: 10%;
+  filter: blur(35px);
+  animation-delay: 3s;
+}
+
+#automation-anywhere::before {
+  width: 220px;
+  height: 220px;
+  background: var(--aa-gradient);
+  top: 25%;
+  left: 7%;
+  filter: blur(45px);
+}
+
+#automation-anywhere::after {
+  width: 270px;
+  height: 270px;
+  background: var(--aa-gradient);
+  bottom: 18%;
+  right: 9%;
+  filter: blur(38px);
+  animation-delay: 1.5s;
+}
+
+/* Animated border on hover */
+.cta-button::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
+  border-radius: var(--border-radius-full);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cta-button:hover::after {
+  opacity: 1;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Shining effect for special elements */
+.platform-tag::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: shine 6s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(30deg);
+  }
+  20%, 100% {
+    transform: translateX(100%) rotate(30deg);
+  }
+}
+
+/* Ensure that platforms are visible initially */
+.platform:first-of-type {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Parallax effect on scroll */
+.hero {
+  background-attachment: fixed;
+}
+
+/* Make platform-tag relative for shine effect */
+.platform-tag {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle texture to backgrounds */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmMGYwZjAiPjwvcmVjdD4KPC9zdmc+');
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: -10;
+}
